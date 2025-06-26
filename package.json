@@ -1,0 +1,37 @@
+{
+  "name": "estruturas-dados-typescript",
+  "version": "1.0.0",
+  "description": "Implementações de estruturas de dados em TypeScript para atividades acadêmicas",
+  "main": "dist/lista-duplamente-encadeada/lista-duplamente-encadeada.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/lista-duplamente-encadeada/lista-duplamente-encadeada.js",
+    "dev": "ts-node lista-duplamente-encadeada/lista-duplamente-encadeada.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:manual": "npm run build && node dist/teste-lista.js",
+    "test:lista": "npm run build && node dist/teste-lista.js",
+    "test:arvore": "npm run build && node dist/teste-arvore.js",
+    "dev:arvore": "ts-node arvore-binaria-busca/arvore-binaria-busca.ts"
+  },
+  "keywords": [
+    "typescript",
+    "estruturas-de-dados",
+    "data-structures",
+    "lista-duplamente-encadeada",
+    "doubly-linked-list",
+    "atividades-academicas",
+    "estrutura-dados-ii"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}
