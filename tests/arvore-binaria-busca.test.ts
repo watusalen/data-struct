@@ -219,6 +219,59 @@ describe('ArvoreBinariaBusca', () => {
     });
   });
 
+  describe('Novas operações BST', () => {
+    beforeEach(() => {
+      // Árvore:
+      //       50
+      //      /  \
+      //     30   70
+      //    / \   / \
+      //   20 40 60 80
+      //      \
+      //      45
+      [50, 30, 70, 20, 40, 60, 80, 45].forEach(valor => arvore.inserir(valor));
+    });
+
+    test('deve retornar ancestrais corretamente', () => {
+      expect(arvore.ancestrais(45)).toEqual([50, 30, 40]);
+      expect(arvore.ancestrais(20)).toEqual([50, 30]);
+      expect(arvore.ancestrais(50)).toEqual([]); // Raiz não tem ancestrais
+      expect(arvore.ancestrais(999)).toEqual([]); // Não existe
+    });
+
+    test('deve retornar descendentes corretamente', () => {
+      expect(arvore.descendentes(30).sort((a,b)=>a-b)).toEqual([20, 40, 45]);
+      expect(arvore.descendentes(40)).toEqual([45]);
+      expect(arvore.descendentes(45)).toEqual([]);
+      expect(arvore.descendentes(999)).toEqual([]); // Não existe
+    });
+
+    test('deve retornar nível corretamente', () => {
+      expect(arvore.nivel(50)).toBe(0); // raiz
+      expect(arvore.nivel(30)).toBe(1);
+      expect(arvore.nivel(40)).toBe(2);
+      expect(arvore.nivel(45)).toBe(3);
+      expect(arvore.nivel(999)).toBe(-1); // não existe
+    });
+
+    test('deve verificar se árvore é estritamente binária', () => {
+      expect(arvore.ehEstritamenteBinaria()).toBe(false); // 40 tem só um filho (45)
+      // Árvore estritamente binária
+      const estrita = new ArvoreBinariaBusca<number>();
+      [10, 5, 15, 3, 7, 13, 17].forEach(v => estrita.inserir(v));
+      expect(estrita.ehEstritamenteBinaria()).toBe(true);
+    });
+
+    test('deve verificar se árvore é cheia', () => {
+      // Árvore cheia: altura 2, 7 nós
+      const cheia = new ArvoreBinariaBusca<number>();
+      [10, 5, 15, 3, 7, 13, 17].forEach(v => cheia.inserir(v));
+      expect(cheia.ehCheia()).toBe(true);
+      // Árvore não cheia
+      expect(arvore.ehCheia()).toBe(false);
+    });
+  });
+
   describe('Método limpar', () => {
     test('deve limpar árvore corretamente', () => {
       [50, 30, 70, 20, 40].forEach(valor => arvore.inserir(valor));
