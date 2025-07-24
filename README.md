@@ -2,6 +2,7 @@
 
 Este repositório contém implementações de diversas estruturas de dados em TypeScript, desenvolvidas como parte das atividades da disciplina de Estrutura de Dados II.
 
+
 ## 📚 Estruturas Implementadas
 
 ### 1. Lista Duplamente Encadeada
@@ -10,7 +11,22 @@ Implementação completa de uma **Lista Duplamente Encadeada** que permite naveg
 ### 2. Árvore Binária de Busca
 Implementação completa de uma **Árvore Binária de Busca (BST)** com todas as operações fundamentais e diferentes tipos de percurso.
 
+### 3. Deque (Double-Ended Queue)
+Implementação completa de um **Deque** (fila dupla), permitindo inserção e remoção de elementos tanto no início quanto no fim da estrutura.
+Ideal para cenários onde é necessário manipular dados nas duas extremidades de forma eficiente.
+
+
 ## 🚀 Funcionalidades Implementadas
+### Funcionalidades do Deque
+
+- **adicionarInicio**: Insere elemento no início
+- **adicionarFim**: Insere elemento no fim
+- **removerInicio**: Remove elemento do início
+- **removerFim**: Remove elemento do fim
+- **estaVazia**: Verifica se o deque está vazio
+- **obterTamanho**: Retorna o número de elementos
+- **exibir**: Retorna array com os elementos em ordem
+- **esvaziar**: Remove todos os elementos
 
 ### ✅ Operações de Inserção
 - **Inserção no início** (`inserirNoInicio`)
@@ -62,9 +78,12 @@ data-struct/
 │   └── lista-duplamente-encadeada.ts    # Lista Duplamente Encadeada
 ├── arvore-binaria-busca/
 │   └── arvore-binaria-busca.ts          # Árvore Binária de Busca
+├── deque/
+│   └── deque.ts                        # Estrutura Deque
 ├── tests/
 │   ├── lista-duplamente-encadeada.test.ts # Testes Jest da Lista
-│   └── arvore-binaria-busca.test.ts     # Testes Jest da Árvore
+│   ├── arvore-binaria-busca.test.ts     # Testes Jest da Árvore
+│   └── deque.test.ts                    # Testes Jest do Deque
 ├── teste-lista.ts                       # Testes manuais da Lista
 ├── teste-arvore.ts                      # Testes manuais da Árvore
 ├── coverage/                            # Relatórios de cobertura (gerado)
@@ -95,7 +114,25 @@ npm run build
 npm test
 ```
 
-### 4. Exemplo de Uso - Lista Duplamente Encadeada
+
+### 4. Exemplo de Uso - Deque
+
+```typescript
+import { Deque } from './deque/deque';
+
+const deque = new Deque<number>();
+deque.adicionarFim(10);
+deque.adicionarInicio(5);
+deque.adicionarFim(20);
+console.log(deque.exibir()); // [5, 10, 20]
+deque.removerInicio(); // 5
+deque.removerFim(); // 20
+console.log(deque.exibir()); // [10]
+console.log('Tamanho:', deque.obterTamanho()); // 1
+console.log('Vazia?', deque.estaVazia()); // false
+deque.esvaziar();
+console.log('Vazia após esvaziar?', deque.estaVazia()); // true
+```
 
 ```typescript
 import { ListaDuplamenteEncadeada } from './lista-duplamente-encadeada/lista-duplamente-encadeada';
@@ -230,7 +267,26 @@ Implementa a estrutura principal com:
 
 *Nota: O pior caso O(n) ocorre quando a árvore está completamente desbalanceada (em linha)*
 
+
 ## 🧪 Testes Incluídos
+### Deque
+
+#### Testes com Jest
+O arquivo `tests/deque.test.ts` contém testes automatizados para todos os métodos e cenários clássicos:
+
+- ✅ Inicialização e estado vazio
+- ✅ Inserção nas extremidades
+- ✅ Remoção nas extremidades
+- ✅ Operações intercaladas
+- ✅ Esvaziamento
+- ✅ Suporte a diferentes tipos
+- ✅ Edge cases e integridade
+
+**Cobertura de Código**: 🎯 **100% em todas as métricas**
+- 100% de statements
+- 100% de branches
+- 100% de functions
+- 100% de lines
 
 ### Lista Duplamente Encadeada
 
@@ -311,9 +367,11 @@ npm run test:manual   # Executa teste manual da lista
 3. **Flexibilidade**: Tamanho dinâmico
 4. **Tipo Genérico**: Funciona com qualquer tipo de dados
 
+
 ## 🎯 Futuras Implementações
 
 Este repositório será expandido com outras estruturas de dados, incluindo:
+- ✅ Deque (Double-Ended Queue)
 - 🔲 Pilha (Stack)
 - 🔲 Fila (Queue)
 - 🔲 Árvore Binária
