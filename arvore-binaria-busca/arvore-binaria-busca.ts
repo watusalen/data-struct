@@ -563,6 +563,125 @@ class ArvoreBinariaBusca<T> {
         this.raiz = null;
         this.quantidade = 0;
     }
+
+    /**
+     * Retorna um array com os valores dos nós ancestrais de um elemento.
+     * Os ancestrais são retornados da raiz até o pai do elemento.
+     *
+     * @param valor - Valor do nó para buscar ancestrais
+     * @returns Array com os valores dos ancestrais, ou vazio se não encontrado
+     * @example
+     * arvore.ancestrais(45); // [50, 30, 40]
+     */
+    ancestrais(valor: T): T[] {
+        const resultado: T[] = [];
+        let atual = this.raiz;
+        while (atual !== null) {
+            if (valor === atual.valor) break;
+            resultado.push(atual.valor);
+            if (valor < atual.valor) {
+                atual = atual.esquerda;
+            } else {
+                atual = atual.direita;
+            }
+        }
+        // Se não encontrou, retorna vazio
+        if (atual === null) return [];
+        return resultado;
+    }
+
+    /**
+     * Retorna um array com os valores dos nós descendentes de um elemento.
+     * Os descendentes são todos os nós abaixo do nó especificado.
+     *
+     * @param valor - Valor do nó para buscar descendentes
+     * @returns Array com os valores dos descendentes, ou vazio se não encontrado
+     * @example
+     * arvore.descendentes(30); // [20, 25, 35, 40, 45]
+     */
+    descendentes(valor: T): T[] {
+        const no = this.localizarNo(this.raiz, valor);
+        if (!no) return [];
+        const resultado: T[] = [];
+        this.descendentesRecursivo(no, resultado);
+        // Remove o próprio nó do resultado
+        return resultado.filter(v => v !== valor);
+    }
+
+    /**
+     * Método privado para localizar um nó pelo valor.
+     */
+    private localizarNo(no: NoArvore<T> | null, valor: T): NoArvore<T> | null {
+        if (!no) return null;
+        if (valor === no.valor) return no;
+        if (valor < no.valor) return this.localizarNo(no.esquerda, valor);
+        return this.localizarNo(no.direita, valor);
+    }
+
+    /**
+     * Método privado para coletar descendentes recursivamente.
+     */
+    private descendentesRecursivo(no: NoArvore<T> | null, resultado: T[]): void {
+        if (!no) return;
+        resultado.push(no.valor);
+        this.descendentesRecursivo(no.esquerda, resultado);
+        this.descendentesRecursivo(no.direita, resultado);
+    }
+
+    /**
+     * Retorna o nível (profundidade) de um elemento na árvore.
+     * Raiz está no nível 0.
+     *
+     * @param valor - Valor do nó para buscar o nível
+     * @returns O nível do nó, ou -1 se não encontrado
+     * @example
+     * arvore.nivel(45); // 3
+     */
+    nivel(valor: T): number {
+        let atual = this.raiz;
+        let nivel = 0;
+        while (atual !== null) {
+            if (valor === atual.valor) return nivel;
+            if (valor < atual.valor) {
+                atual = atual.esquerda;
+            } else {
+                atual = atual.direita;
+            }
+            nivel++;
+        }
+        return -1;
+    }
+
+    /**
+     * Verifica se a árvore é estritamente binária (todo nó tem 0 ou 2 filhos).
+     *
+     * @returns true se for estritamente binária, false caso contrário
+     * @example
+     * arvore.ehEstritamenteBinaria(); // true
+     */
+    ehEstritamenteBinaria(): boolean {
+        return this.ehEstritamenteBinariaRec(this.raiz);
+    }
+
+    private ehEstritamenteBinariaRec(no: NoArvore<T> | null): boolean {
+        if (!no) return true;
+        const filhos = [no.esquerda, no.direita].filter(x => x !== null).length;
+        if (filhos === 1) return false;
+        return this.ehEstritamenteBinariaRec(no.esquerda) && this.ehEstritamenteBinariaRec(no.direita);
+    }
+
+    /**
+     * Verifica se a árvore é cheia (todos os níveis, exceto o último, estão completos).
+     *
+     * @returns true se for cheia, false caso contrário
+     * @example
+     * arvore.ehCheia(); // true
+     */
+    ehCheia(): boolean {
+        const altura = this.obterAltura();
+        const totalEsperado = Math.pow(2, altura + 1) - 1;
+        return this.obterQuantidadeElementos() === totalEsperado;
+    }
 }
 
 /**
